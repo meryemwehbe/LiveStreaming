@@ -231,7 +231,7 @@ public class GvrVideoPlayerTexture : MonoBehaviour {
     SetOnVideoEventCallback((eventId) => {
       Debug.Log("------------- E V E N T " + eventId + " -----------------");
       UpdateStatusText();
-    });
+		});
 
     SetOnExceptionCallback((type, msg) => {
       Debug.LogError("Exception: " + type + ": " + msg);
@@ -511,10 +511,11 @@ public class GvrVideoPlayerTexture : MonoBehaviour {
     transform.localScale = newscale;
   }
 
-  private void UpdateStatusText() {
+  public void UpdateStatusText() {
     float fps = CurrentPosition > 0 ?
       (framecount / (CurrentPosition / 1000f)) : CurrentPosition;
-    string status = texWidth + " x " + texHeight + " buffer: " +
+		Debug.Log ("entered = "+ fps);
+	string status = texWidth + " x " + texHeight + " buffer: " +
       (BufferedPosition / 1000) + " " + PlayerState + " fps: " + fps;
     if (statusText != null) {
       if (statusText.text != status) {

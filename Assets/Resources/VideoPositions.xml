@@ -8,7 +8,7 @@
 			<name>http://192.168.1.162:1935/live/live2/manifest.mpd</name>
 		</video>
 		<video id="StreamedVideo">
-			<x>5</x>
+			<x>15</x>
 			<y>0</y>
 			<z>0</z>
 			<name>http://192.168.1.162:1935/live/live1/manifest.mpd</name>

@@ -173,7 +173,7 @@ c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.VR.WSA.Spa
 45f3431f0103c41611e8d4eec3d439df UnityEngine.HoloLens.dll:UnityEngine.VR.WSA.SpatialMappingRenderer
 9b20260cbe18d3c2ba9d5e6f94929419 Assembly-CSharp.dll:.GvrFPS
 6a782a0988125ab45e4aa3b821ea9146 Assembly-CSharp.dll:.GvrReticlePointer
-985240427ec94f04a4ac379f56fe9096 Assembly-CSharp.dll:.LocationManager
+3f1d67cd21760b4bc0af4eb27dea8454 Assembly-CSharp.dll:.LocationManager
 4b8ea17c4350779db30d026c2281dfcb Assembly-CSharp.dll:.PooledPageProvider
 213976e6ef69ef51b81ef082c04b8edb Assembly-CSharp.dll:.GvrArmModelOffsets
 c4bfdf49a9582e36642d81d40925fe76 Assembly-CSharp.dll:.OctahedronSphereTester
