@@ -27,7 +27,7 @@ public class GvrVideoPlayerTexture : MonoBehaviour {
   /// <summary>
   /// The video player pointer used to uniquely identify the player instance.
   /// </summary>
-  public static IntPtr videoPlayerPtr;
+  private IntPtr videoPlayerPtr;
 
   /// <summary>
   /// The video player event base.
@@ -231,7 +231,7 @@ public class GvrVideoPlayerTexture : MonoBehaviour {
     SetOnVideoEventCallback((eventId) => {
       Debug.Log("------------- E V E N T " + eventId + " -----------------");
       UpdateStatusText();
-		});
+    });
 
     SetOnExceptionCallback((type, msg) => {
       Debug.LogError("Exception: " + type + ": " + msg);
@@ -404,16 +404,6 @@ public class GvrVideoPlayerTexture : MonoBehaviour {
     }
   }
 
-   // my function
-   public string Getinfo(){
-		return /*"url = " + GvrVideoPlayerTexture.videoURL + "\nintialResolution = " + GvrVideoPlayerTexture.initialResolution +*/
-			"CurrentPosition = " + GetCurrentPosition (videoPlayerPtr) + "\nBufferedPosition = "
-			+ GetBufferedPosition (videoPlayerPtr) + "\nVideoDuration = " + GetDuration (videoPlayerPtr)
-			+ "\nPlayerState = " + GetPlayerState (videoPlayerPtr) + "\nWidth = " + GetWidth (videoPlayerPtr)
-			+ "\nHeight = " + GetHeight(videoPlayerPtr) + "\nBufferedPercentage = " + GetBufferedPercentage(videoPlayerPtr) + 
-			"\nVideotimestamps = " + GetVideoTimestampNs(videoPlayerPtr); 
-	}
-
   /// <summary>
   /// Resets the video player.
   /// </summary>
@@ -511,11 +501,10 @@ public class GvrVideoPlayerTexture : MonoBehaviour {
     transform.localScale = newscale;
   }
 
-  public void UpdateStatusText() {
+  private void UpdateStatusText() {
     float fps = CurrentPosition > 0 ?
       (framecount / (CurrentPosition / 1000f)) : CurrentPosition;
-		Debug.Log ("entered = "+ fps);
-	string status = texWidth + " x " + texHeight + " buffer: " +
+    string status = texWidth + " x " + texHeight + " buffer: " +
       (BufferedPosition / 1000) + " " + PlayerState + " fps: " + fps;
     if (statusText != null) {
       if (statusText.text != status) {
@@ -969,9 +958,6 @@ public class GvrVideoPlayerTexture : MonoBehaviour {
     IntPtr callback_arg) {
     Debug.Log(NOT_IMPLEMENTED_MSG);
   }
-
-
-
 #endif  // UNITY_ANDROID && !UNITY_EDITOR
 }
 

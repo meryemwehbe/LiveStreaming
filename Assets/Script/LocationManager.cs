@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System;
+using System.Text;
 using System.IO;
+using System;
 using System.Xml;
 using UnityEngine;
 using UnityEngine.VR;
@@ -32,21 +33,11 @@ public class LocationManager : MonoBehaviour {
 	bool startmoving = false;
 	bool not_start = false;
 	Vector3 next_location;
+	String currentVideo_num;
 
 	// Use this for initialization
 	void Start () {
 		//
-		/*MyScene = SceneManager.GetArguments();
-	    switch (MyScene) {
-		case "Greece":
-			xmlName = "PositionLocations";
-			break;
-		case "Classroom":
-			xmlName = "ClassRoomDemo";
-			break;
-
-		}*/
-		//VideoStream.videoURL = "https://storage.googleapis.com/daydream-deveng.appspot.com/japan360/dash/japan_day06_eagle2_shot0005-2880px_40000kbps.mpd";
 		camera = GameObject.FindWithTag("MainCamera");
 		xmlName = "VideoPositions";
 		videostream = proj_sphere.GetComponent<GvrVideoPlayerTexture>();
@@ -58,20 +49,34 @@ public class LocationManager : MonoBehaviour {
 		Navigate(startLocation);
 		Debug.Log ("start video = " + currentVideo);
 		changeVideo(currentVideo);
+
  	}
 
 	// Update is called once per frame
 	void Update () {
 
-		videostream.statusText = debugtext2;
+		if (videostream.PlayerState == GvrVideoPlayerTexture.VideoPlayerState.Idle) {
+			videostream.RestartVideo();
+		}
 
-		debugtext.text = 
-		//debugtext.text ="PlayerState = " + videostream.PlayerState + "\nurl = "+ videostream.videoURL+ 
-			"Head Rotation = "+camera.transform.rotation.eulerAngles;
-		//debugtext.text = "Status = " +videostream.statusText.text;
+		//string path = System.IO.Path.Combine(Application.streamingAssetsPath,"movements.txt");
+		//string path = "jar:file://" + Application.dataPath + "!/assets/movements.txt";
+		/*string path = "jar:file:/data/app/com.EPFL.overalltrial/base.apk/assets/movements.txt";
+		WWW wwwfile = new WWW(path);
+		/*while (!wwwfile.isDone) {
+		}
+		var filepath = string.Format ("{0}/{1}", Application.persistentDataPath, "movements.t");
+		File.WriteAllBytes (path, wwwfile.bytes);
+		StreamWriter wr = new StreamWriter (path);
+		wr.WriteLine (currentVideo_num +" "+DateTime.UtcNow.ToString()+"  "+camera.transform.rotation.eulerAngles);
+		wr.Close ();*/
+		//Debug.Log(writer);
+
+		debugtext.text ="PlayerState = " + videostream.PlayerState + "\n"+ videostream.videoURL+ 
+			"\nHead Rotation = "+camera.transform.rotation.eulerAngles ;
+	
 		
 	    
-
 		//videostream.UpdateStatusText();
 		//Debug.Log (videostream.statusText);
 		if (startmoving && next_location !=null) {
@@ -107,6 +112,7 @@ public class LocationManager : MonoBehaviour {
 		startmoving = true;
 		currentLocation = nextLocation;
 	}
+
 	void UpdateLocations(){
 		//remove previous points
 		GameObject[] presentGameObjects = GameObject.FindGameObjectsWithTag("Location");
@@ -132,6 +138,7 @@ public class LocationManager : MonoBehaviour {
 				    pos.getz () == currentLocation.transform.position.z) {
 
 					currentVideo = pos.getVideo ();
+					currentVideo_num = pos.getID ();
 					//nearlocation = (GameObject)Instantiate (Resources.Load ("Prefabs/CLocation"), new Vector3 (pos.getx (), pos.gety (), pos.getz ()), Quaternion.Euler (0, 0, 0));
 
 			
@@ -243,9 +250,17 @@ public class LocationManager : MonoBehaviour {
 	}
 		
 
-	public void Return(){
-		Debug.Log ("yesssssssssss");
-		//SceneManager.LoadScene ("startSceen", "");
-	}	 
+
+	public void WriteHeadMovements(String added_line){
+
+		String path = System.IO.Path.Combine(Application.streamingAssetsPath,"movements.txt");
+		Debug.Log (path);
+		using (System.IO.StreamWriter file = 
+			new System.IO.StreamWriter(path,true))//@"C:\Users\pc\Documents\Swisscom\Overall_trial\LiveStreaming\Assets\Script\movements.txt", true))
+		{
+			file.WriteLine(added_line);
+		}
+
+	}
 
 }
